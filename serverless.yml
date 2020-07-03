@@ -24,9 +24,9 @@ provider:
 
 functions:
   get_all_items:
-    handler: dofus-bubble/dynamodb/get_all_items.get_all_items
+    handler: dofus_bubble/dynamodb/get_all_items.get_all_items
     events:
       - http:
-          path: dofus-bubble/dynamodb
+          path: dofus_bubble/dynamodb
           method: get
           cors: true
