@@ -1,6 +1,6 @@
 import logging
 
-from dynamodb.dynamodb import DynamoDB
+from dofus_bubble.dynamodb.dynamodb import DynamoDB
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

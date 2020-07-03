@@ -1,6 +1,6 @@
 import logging
 
-from dofapi.dofapi import Dofapi
+from dofus_bubble.dofapi.dofapi import Dofapi
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
