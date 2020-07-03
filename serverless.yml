@@ -33,3 +33,21 @@ functions:
           cors: true
     layers:
       - ${self:provider.environment.AWS_UTILS}
+  get_item:
+    handler: dofus_bubble/dynamodb/get_item.get_item
+    events:
+      - http:
+          path: dofus_bubble/dynamodb/{_id}
+          method: get
+          cors: true
+    layers:
+      - ${self:provider.environment.AWS_UTILS}
+  put_item:
+    handler: dofus_bubble/dynamodb/put_item.put_item
+    events:
+      - http:
+          path: dofus_bubble/dynamodb
+          method: post
+          cors: true
+    layers:
+      - ${self:provider.environment.AWS_UTILS}
