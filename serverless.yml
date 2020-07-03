@@ -15,6 +15,7 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     DYNAMODB_TABLE: ${self:service}
+    AWS_UTILS: "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:13"
 
   iamRoleStatements:
     - Effect: Allow
@@ -30,3 +31,5 @@ functions:
           path: dofus_bubble/dynamodb
           method: get
           cors: true
+    layers:
+      - ${self:provider.environment.AWS_UTILS}
