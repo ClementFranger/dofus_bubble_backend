@@ -6,12 +6,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def get_all_weapons(event, context):
+def get_all_weapons(event, context, **kwargs):
     logger.info('event : {event}'.format(event=event))
+    return Dofapi().get_all_weapons()
 
-    logger.info('Getting all weapons')
-
-    result = Dofapi().get_all_weapons()
-
-    logger.info('Retrieved all weapons')
-    return result
+print(get_all_weapons(None, None))
