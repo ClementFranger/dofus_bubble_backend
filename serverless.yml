@@ -26,8 +26,8 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
-  get_all_items:
-    handler: dofus_bubble/dynamodb/get_all_items.get_all_items
+  scan_items:
+    handler: dofus_bubble/dynamodb/scan_items.scan_items
     events:
       - http:
           path: dofus_bubble/dynamodb
