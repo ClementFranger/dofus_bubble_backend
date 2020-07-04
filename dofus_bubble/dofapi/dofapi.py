@@ -1,6 +1,6 @@
 import requests
 import logging
-from utils import request, to_json, aws_output
+from utils import request, to_json
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

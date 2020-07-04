@@ -22,10 +22,9 @@ class DynamoDB(object):
         logger.info('Getting all items')
 
         result = self.__TABLE__.scan(**kwargs)
-        if not result.get('Items'):
-            return success(status_code=204, body=json.dumps(result.get('Items'), cls=DecimalEncoder))
+
         logger.info('Retrieved all items')
-        return success(body=json.dumps(result.get('Items'), cls=DecimalEncoder))
+        return result
 
     @request
     def put(self, **kwargs):
@@ -34,15 +33,13 @@ class DynamoDB(object):
         result = self.__TABLE__.put_item(**kwargs)
 
         logger.info('Created item {item}'.format(item=kwargs.get('item')))
-        return success(body=json.dumps(result, cls=DecimalEncoder))
+        return result
 
     @request
     def get(self, **kwargs):
         logger.info('Getting item {key}'.format(key=kwargs.get('key')))
 
         result = self.__TABLE__.get_item(**kwargs)
-        if not result.get('Item'):
-            return success(status_code=204, body=json.dumps(result.get('Item'), cls=DecimalEncoder))
 
         logger.info('Retrieved item {key}'.format(key=kwargs.get('key')))
-        return success(body=json.dumps(result.get('Item'), cls=DecimalEncoder))
+        return result
