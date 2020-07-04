@@ -1,4 +1,4 @@
-from dofus_bubble.dofapi.dofapi import Dofapi
+from dofapi.dofapi import Dofapi
 from utils import success
 
 

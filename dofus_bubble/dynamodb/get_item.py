@@ -1,4 +1,4 @@
-from dofus_bubble.dynamodb.dynamodb import DynamoDB
+from dynamodb.dynamodb import DynamoDB
 from utils import success, load_payload, check_payload
 
 
