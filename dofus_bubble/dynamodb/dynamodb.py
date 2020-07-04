@@ -1,9 +1,8 @@
-import json
 import logging
 import os
 import boto3
 
-from utils import success, failure, DecimalEncoder, request
+from utils import request
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -28,18 +27,18 @@ class DynamoDB(object):
 
     @request
     def put(self, **kwargs):
-        logger.info('Creating item {item}'.format(item=kwargs.get('item')))
+        logger.info('Creating item {item}'.format(item=kwargs.get('Item')))
 
         result = self.__TABLE__.put_item(**kwargs)
 
-        logger.info('Created item {item}'.format(item=kwargs.get('item')))
+        logger.info('Created item {item}'.format(item=kwargs.get('Item')))
         return result
 
     @request
     def get(self, **kwargs):
-        logger.info('Getting item {key}'.format(key=kwargs.get('key')))
+        logger.info('Getting item {key}'.format(key=kwargs.get('Key')))
 
         result = self.__TABLE__.get_item(**kwargs)
 
-        logger.info('Retrieved item {key}'.format(key=kwargs.get('key')))
+        logger.info('Retrieved item {key}'.format(key=kwargs.get('Key')))
         return result
