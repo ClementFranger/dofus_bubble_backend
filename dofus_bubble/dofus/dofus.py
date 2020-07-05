@@ -1,3 +1,4 @@
+import json
 import logging
 import boto3
 
@@ -19,12 +20,13 @@ class Dofus(object):
     @request
     def scan_weapons_by_price(self, **kwargs):
         weapons = self.__CLIENT__.invoke(FunctionName='{service}-{stage}-scan_weapons'.format(service=self.__SERVICE__,
-                                                                                              stage=self.__STAGE__))
-        items = self.__CLIENT__.invoke(FunctionName='{service}-{stage}-scan_items'.format(service=self.__SERVICE__,
-                                                                                          stage=self.__STAGE__))
+                                                                                              stage=self.__STAGE__)).get('Payload').read()
+        weapons = json.loads(weapons)
+        # items = self.__CLIENT__.invoke(FunctionName='{service}-{stage}-scan_items'.format(service=self.__SERVICE__,
+        #                                                                                   stage=self.__STAGE__)).get('Payload').read()
         print(weapons)
         print(type(weapons))
         print(weapons.keys())
-        print(items)
+        # print(items)
 
-        return weapons, items
+        return weapons
