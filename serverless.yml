@@ -26,6 +26,15 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
+  scan_weapons:
+    handler: dofus_bubble/dofapi/scan_weapons.scan_weapons
+    events:
+      - http:
+          path: dofus_bubble/weapons
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_items:
     handler: dofus_bubble/dynamodb/scan_items.scan_items
     events:

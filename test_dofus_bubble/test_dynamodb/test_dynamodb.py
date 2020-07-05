@@ -18,14 +18,17 @@ class TestDynamoDB(unittest.TestCase):
             self.__event__['body'] = json.dumps(json.loads(mock.read()).get('body'))
         result = put_item(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
         self.assertIsInstance(result, dict)
+        self.assertEqual(result.get('statusCode'), 200)
 
     def test_get_item(self):
         with open(self.__mock__.format(mock='get_item'), "r") as mock:
             self.__event__['pathParameters'] = json.loads(mock.read()).get('pathParameters')
         result = get_item(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
         self.assertIsInstance(result, dict)
+        self.assertEqual(result.get('statusCode'), 200)
 
     def test_scan_items(self):
         result = scan_items(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
         self.assertIsInstance(result, dict)
+        self.assertEqual(result.get('statusCode'), 200)
 
