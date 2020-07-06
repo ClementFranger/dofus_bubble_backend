@@ -1,9 +1,6 @@
-import json
-import os
 import unittest
 
-from dofus_bubble.dofapi.scan_weapons import scan_weapons
-from dofus_bubble.dofus.scan_weapons_by_price import scan_weapons_by_price
+from dofus_bubble.dofapi.lambdas import scan_weapons
 
 
 class TestDofapi(unittest.TestCase):

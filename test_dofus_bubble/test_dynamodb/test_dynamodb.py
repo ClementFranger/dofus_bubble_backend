@@ -2,9 +2,7 @@ import json
 import os
 import unittest
 
-from dofus_bubble.dynamodb.get_item import get_item
-from dofus_bubble.dynamodb.put_item import put_item
-from dofus_bubble.dynamodb.scan_items import scan_items
+from dofus_bubble.dynamodb.lambdas import get_item, put_item, scan_items
 
 
 class TestDynamoDB(unittest.TestCase):
