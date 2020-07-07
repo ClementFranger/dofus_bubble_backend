@@ -9,7 +9,7 @@ class LambdasDofus(Lambdas):
     def scan_weapons_by_price(*args, **kwargs):
         weapons = scan_weapons(*args, **kwargs)
         items = scan_items(*args, **kwargs)
-        return {'statusCode': 300, 'body': [weapons, items]}
+        return {'statusCode': 200, 'body': [weapons, items]}
 
 
 scan_weapons_by_price = LambdasDofus().scan_weapons_by_price
