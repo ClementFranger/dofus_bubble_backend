@@ -27,7 +27,7 @@ provider:
 
 functions:
   scan_weapons:
-    handler: dofus_bubble/dofapi/lambda.scan_weapons
+    handler: dofus_bubble/dofapi/lambdas.scan_weapons
     events:
       - http:
           path: dofus_bubble/weapons
@@ -36,7 +36,7 @@ functions:
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_items:
-    handler: dofus_bubble/dynamodb/lambda.scan_items
+    handler: dofus_bubble/dynamodb/lambdas.scan_items
     events:
       - http:
           path: dofus_bubble/dynamodb
@@ -45,7 +45,7 @@ functions:
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   get_item:
-    handler: dofus_bubble/dynamodb/lambda.get_item
+    handler: dofus_bubble/dynamodb/lambdas.get_item
     events:
       - http:
           path: dofus_bubble/dynamodb/{_id}
@@ -54,7 +54,7 @@ functions:
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   put_item:
-    handler: dofus_bubble/dynamodb/lambda.put_item
+    handler: dofus_bubble/dynamodb/lambdas.put_item
     events:
       - http:
           path: dofus_bubble/dynamodb
