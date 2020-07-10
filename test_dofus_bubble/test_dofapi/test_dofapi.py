@@ -1,7 +1,6 @@
 import json
 import unittest
 
-from dofapi.dofapi import Dofapi
 from dofus_bubble.dofapi.lambdas import LambdasDofapi
 
 

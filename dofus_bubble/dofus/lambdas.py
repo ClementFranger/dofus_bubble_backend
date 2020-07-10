@@ -61,6 +61,7 @@ class LambdasDofus(LambdasDofapi):
     @staticmethod
     @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Decorators.output
+    @Lambdas.Decorators.limit()
     @Decorators.craft
     def scan_items_craft(*args, **kwargs):
         items = list({v[Dofapi.__ID__]: v for v in json.loads(LambdasDofus._scan_items(*args, **kwargs).get('body'))}.values())
