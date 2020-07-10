@@ -15,7 +15,7 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     DYNAMODB_TABLE: ${self:service}
-    AWS_UTILS: 31
+    AWS_UTILS: 32
 
   iamRoleStatements:
     - Effect: Allow
@@ -26,11 +26,56 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 functions:
+  scan_consumables:
+    handler: dofus_bubble/dofapi/lambdas.scan_consumables
+    events:
+      - http:
+          path: dofus_bubble/consumables
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+  scan_equipments:
+    handler: dofus_bubble/dofapi/lambdas.scan_equipments
+    events:
+      - http:
+          path: dofus_bubble/equipments
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+  scan_idols:
+    handler: dofus_bubble/dofapi/lambdas.scan_idols
+    events:
+      - http:
+          path: dofus_bubble/idols
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+  scan_resources:
+    handler: dofus_bubble/dofapi/lambdas.scan_resources
+    events:
+      - http:
+          path: dofus_bubble/resources
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_weapons:
     handler: dofus_bubble/dofapi/lambdas.scan_weapons
     events:
       - http:
           path: dofus_bubble/weapons
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+  _scan_items:
+    handler: dofus_bubble/dofapi/lambdas._scan_items
+    events:
+      - http:
+          path: dofus_bubble
           method: get
           cors: true
     layers:
@@ -59,6 +104,15 @@ functions:
       - http:
           path: dofus_bubble/dynamodb
           method: post
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+  scan_items_craft:
+    handler: dofus_bubble/dofus/lambdas.scan_items_craft
+    events:
+      - http:
+          path: dofus_bubble/dofus
+          method: get
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"

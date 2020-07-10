@@ -24,7 +24,7 @@ class LambdasDofus(LambdasDofapi):
                 result = LambdasDofus._merge_items_price(*result)
                 result = LambdasDofus.filter_items_recipe(result)
                 result = LambdasDofus.compute_items_craft(result)
-                return result
+                return sorted(result, key=lambda i: i.get('price') - i.get('craft'), reverse=True)
             return wrapper
 
     @staticmethod
@@ -58,10 +58,10 @@ class LambdasDofus(LambdasDofapi):
 
     @Decorators.output
     @Decorators.craft
-    def scan_items_by_price(self, *args, **kwargs):
+    def scan_items_craft(self, *args, **kwargs):
         items = list({v['_id']: v for v in LambdasDofus._scan_items(*args, **kwargs).get('body')}.values())
         items_db = LambdasDynamoDB.scan_items(*args, **kwargs).get('body').get('Items')
         return items, items_db
 
 
-scan_items_by_price = LambdasDofus().scan_items_by_price
+scan_items_craft = LambdasDofus().scan_items_craft
