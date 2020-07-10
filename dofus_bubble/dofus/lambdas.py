@@ -5,6 +5,7 @@ from itertools import chain
 from dofus_bubble.dofapi.lambdas import Dofapi, LambdasDofapi
 from dofus_bubble.dynamodb.lambdas import LambdasDynamoDB
 from lambdas.lambdas import Lambdas
+from utils import DecimalEncoder
 
 
 class LambdasDofus(LambdasDofapi):
@@ -15,7 +16,7 @@ class LambdasDofus(LambdasDofapi):
             @wraps(f)
             def wrapper(*args, **kwargs):
                 result = f(*args, **kwargs)
-                return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': json.dumps(result)}
+                return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': json.dumps(result, cls=DecimalEncoder)}
             return wrapper
 
         @classmethod
