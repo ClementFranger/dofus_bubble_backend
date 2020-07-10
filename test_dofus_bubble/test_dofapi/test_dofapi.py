@@ -39,4 +39,3 @@ class TestDofapi(unittest.TestCase):
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get('statusCode'), 200)
         [self.assertIsInstance(i, dict) for i in result.get('body')]
-        self.assertEqual(result.get('body'), list({v['_id']: v for v in result.get('body')}.values()))

@@ -58,9 +58,9 @@ class LambdasDofus(LambdasDofapi):
                 in items if i.get('recipe')]
 
     @staticmethod
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Decorators.output
     @Decorators.craft
-    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     def scan_items_craft(*args, **kwargs):
         items = list({v['_id']: v for v in LambdasDofus._scan_items(*args, **kwargs).get('body')}.values())
         items_db = LambdasDynamoDB.scan_items(*args, **kwargs).get('body').get('Items')
