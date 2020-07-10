@@ -29,4 +29,5 @@ class TestDynamoDB(unittest.TestCase):
         result = scan_items(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get('statusCode'), 200)
+        print(result)
 
