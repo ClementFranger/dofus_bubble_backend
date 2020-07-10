@@ -18,4 +18,5 @@ class TestDofus(unittest.TestCase):
 
     def test_scan_items_craft(self):
         result = LambdasDofus().scan_items_craft(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        self.assertIsInstance(result.get('body'), str)
         self._test_response(result)

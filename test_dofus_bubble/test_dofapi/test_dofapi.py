@@ -40,4 +40,5 @@ class TestDofapi(unittest.TestCase):
         result = LambdasDofapi._scan_items(self.__event__, self.__context__)
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get('statusCode'), 200)
+        self.assertIsInstance(result.get('body'), str)
         [self.assertIsInstance(i, dict) for i in json.loads(result.get('body'))]
