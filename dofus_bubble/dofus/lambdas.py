@@ -63,8 +63,8 @@ class LambdasDofus(LambdasDofapi):
     @Decorators.output
     @Decorators.craft
     def scan_items_craft(*args, **kwargs):
-        items = list({v[Dofapi.__ID__]: v for v in LambdasDofus._scan_items(*args, **kwargs).get('body')}.values())
-        items_db = LambdasDynamoDB.scan_items(*args, **kwargs).get('body').get('Items')
+        items = list({v[Dofapi.__ID__]: v for v in json.loads(LambdasDofus._scan_items(*args, **kwargs).get('body'))}.values())
+        items_db = json.loads(LambdasDynamoDB.scan_items(*args, **kwargs).get('body')).get('Items')
         return items, items_db
 
 
