@@ -3,6 +3,7 @@ from itertools import chain
 
 from dofus_bubble.dofapi.lambdas import Dofapi, LambdasDofapi
 from dofus_bubble.dynamodb.lambdas import LambdasDynamoDB
+from lambdas.lambdas import Lambdas
 
 
 class LambdasDofus(LambdasDofapi):
@@ -13,7 +14,7 @@ class LambdasDofus(LambdasDofapi):
             @wraps(f)
             def wrapper(*args, **kwargs):
                 result = f(*args, **kwargs)
-                return {'statusCode': 200, 'body': result}
+                return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': result}
             return wrapper
 
         @classmethod
@@ -56,9 +57,11 @@ class LambdasDofus(LambdasDofapi):
             'craft': LambdasDofus._reduce_craft(items=items, recipe=list(chain(*[r.values() for r in i.get('recipe')])))}} for i
                 in items if i.get('recipe')]
 
+    @staticmethod
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Decorators.output
     @Decorators.craft
-    def scan_items_craft(self, *args, **kwargs):
+    def scan_items_craft(*args, **kwargs):
         items = list({v['_id']: v for v in LambdasDofus._scan_items(*args, **kwargs).get('body')}.values())
         items_db = LambdasDynamoDB.scan_items(*args, **kwargs).get('body').get('Items')
         return items, items_db

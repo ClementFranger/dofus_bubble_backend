@@ -5,7 +5,7 @@ from dofus_bubble.dofus.lambdas import LambdasDofus
 
 class TestDofus(unittest.TestCase):
     __DYNAMODB_TABLE__ = 'dofus-bubble'
-    __event__ = {'body': None, 'pathParameters': None, 'queryStringParameters': None}
+    __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None, 'queryStringParameters': None}
     __context__ = None
 
     def _test_response(self, result):
