@@ -1,3 +1,4 @@
+import json
 from functools import wraps, reduce
 from itertools import chain
 
@@ -14,7 +15,7 @@ class LambdasDofus(LambdasDofapi):
             @wraps(f)
             def wrapper(*args, **kwargs):
                 result = f(*args, **kwargs)
-                return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': result}
+                return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': json.dumps(result)}
             return wrapper
 
         @classmethod

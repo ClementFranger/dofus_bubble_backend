@@ -1,3 +1,4 @@
+import json
 from functools import wraps
 
 from lambdas.lambdas import Lambdas
@@ -14,7 +15,7 @@ class LambdasDofapi(Lambdas):
                 result = f(*args, **kwargs)
                 if isinstance(result, dict) and result.get('error'):
                     return result.get('error')
-                return {'statusCode': 200, 'body': result}
+                return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': json.dumps(result)}
             return wrapper
 
     @staticmethod
