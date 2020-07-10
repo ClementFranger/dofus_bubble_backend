@@ -16,6 +16,17 @@ class LambdasDofus(LambdasDofapi):
                 return {'statusCode': 200, 'body': result}
             return wrapper
 
+        @classmethod
+        def craft(cls, f):
+            @wraps(f)
+            def wrapper(*args, **kwargs):
+                result = f(*args, **kwargs)
+                result = LambdasDofus._merge_items_price(*result)
+                result = LambdasDofus.filter_items_recipe(result)
+                result = LambdasDofus.compute_items_craft(result)
+                return result
+            return wrapper
+
     @staticmethod
     def _find_item(**kwargs):
         items, id = kwargs.get('items'), kwargs.get('id')
@@ -46,17 +57,11 @@ class LambdasDofus(LambdasDofapi):
                 in items if i.get('recipe')]
 
     @Decorators.output
+    @Decorators.craft
     def scan_items_by_price(self, *args, **kwargs):
-        weapons = LambdasDofus.scan_weapons(*args, **kwargs).get('body')
-        resources = LambdasDofus.scan_resources(*args, **kwargs).get('body')
-        weapons.extend(resources)
-        items = LambdasDynamoDB.scan_items(*args, **kwargs).get('body').get('Items')
-        # result = sorted(LambdasDofus._merge_items_price(weapons, items), key=lambda k: k['price'], reverse=True)
-        # TODO : make it a decorator (all func weapon, equipements ect will do this
-        result = LambdasDofus._merge_items_price(weapons, items)
-        result = LambdasDofus.filter_items_recipe(result)
-        result = LambdasDofus.compute_items_craft(result)
-        return result
+        items = list({v['_id']: v for v in LambdasDofus._scan_items(*args, **kwargs).get('body')}.values())
+        items_db = LambdasDynamoDB.scan_items(*args, **kwargs).get('body').get('Items')
+        return items, items_db
 
 
 scan_items_by_price = LambdasDofus().scan_items_by_price

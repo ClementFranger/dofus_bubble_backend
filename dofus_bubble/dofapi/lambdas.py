@@ -44,8 +44,8 @@ class LambdasDofapi(Lambdas):
 
     @staticmethod
     @Decorators.output
-    def scan_items(*args, **kwargs):
-        return Dofapi().scan_items()
+    def _scan_items(*args, **kwargs):
+        return Dofapi()._scan_items()
 
 
 scan_consumables = LambdasDofapi().scan_consumables
@@ -53,4 +53,4 @@ scan_equipments = LambdasDofapi().scan_equipments
 scan_idols = LambdasDofapi().scan_idols
 scan_resources = LambdasDofapi().scan_resources
 scan_weapons = LambdasDofapi().scan_weapons
-scan_items = LambdasDofapi().scan_items
+_scan_items = LambdasDofapi()._scan_items

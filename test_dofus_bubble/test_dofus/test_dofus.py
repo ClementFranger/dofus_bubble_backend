@@ -14,6 +14,6 @@ class TestDofus(unittest.TestCase):
         [self.assertIsInstance(i, dict) for i in result.get('body')]
         self.assertEqual(result.get('body'), list({v['_id']: v for v in result.get('body')}.values()))
 
-    def test_scan_weapons_by_price(self):
+    def test_scan_items_by_price(self):
         result = LambdasDofus().scan_items_by_price(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
         self._test_response(result)
