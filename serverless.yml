@@ -15,7 +15,7 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     DYNAMODB_TABLE: ${self:service}
-    AWS_UTILS: 39
+    AWS_UTILS: 40
 
   iamRoleStatements:
     - Effect: Allow
