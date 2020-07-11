@@ -6,7 +6,8 @@ from dofus_bubble.dofus.lambdas import LambdasDofus
 
 class TestDofus(unittest.TestCase):
     __DYNAMODB_TABLE__ = 'dofus-bubble'
-    __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None, 'queryStringParameters': None}
+    __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None,
+                 'queryStringParameters': None}
     __context__ = None
 
     def _test_response(self, result):
@@ -17,6 +18,37 @@ class TestDofus(unittest.TestCase):
         self.assertEqual(body, list({v['_id']: v for v in body}.values()))
 
     def test_scan_items_craft(self):
-        result = LambdasDofus().scan_items_craft(self.__event__, self.__context__, DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        result = LambdasDofus().scan_items_craft(self.__event__, self.__context__,
+                                                 DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        self.assertIsInstance(result.get('body'), str)
+        self._test_response(result)
+
+    def test_scan_consumables_price(self):
+        result = LambdasDofus().scan_consumables_price(self.__event__, self.__context__,
+                                                       DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        self.assertIsInstance(result.get('body'), str)
+        self._test_response(result)
+
+    def test_scan_equipments_price(self):
+        result = LambdasDofus().scan_equipments_price(self.__event__, self.__context__,
+                                                      DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        self.assertIsInstance(result.get('body'), str)
+        self._test_response(result)
+
+    def test_scan_idols_price(self):
+        result = LambdasDofus().scan_idols_price(self.__event__, self.__context__,
+                                                 DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        self.assertIsInstance(result.get('body'), str)
+        self._test_response(result)
+
+    def test_scan_resources_price(self):
+        result = LambdasDofus().scan_resources_price(self.__event__, self.__context__,
+                                                     DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
+        self.assertIsInstance(result.get('body'), str)
+        self._test_response(result)
+
+    def test_scan_weapons_price(self):
+        result = LambdasDofus().scan_weapons_price(self.__event__, self.__context__,
+                                                   DYNAMODB_TABLE=self.__DYNAMODB_TABLE__)
         self.assertIsInstance(result.get('body'), str)
         self._test_response(result)
