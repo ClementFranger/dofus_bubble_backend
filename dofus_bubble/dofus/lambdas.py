@@ -47,7 +47,7 @@ class LambdasDofus(LambdasDofapi):
     @staticmethod
     def _reduce_craft(**kwargs):
         def compute_craft(r):
-            return r.get('quantity') * LambdasDofus._find_item(items=items, id=r.get(Dofapi.__ANKAMA_ID__)).get('price')
+            return int(r.get('quantity')) * int(LambdasDofus._find_item(items=items, id=r.get(Dofapi.__ANKAMA_ID__)).get('price'))
 
         items, recipe = kwargs.get('items'), kwargs.get('recipe')
         return reduce(lambda a, b: compute_craft(a) + compute_craft(b), recipe)
