@@ -15,6 +15,7 @@ class LambdasDynamoDB(Lambdas):
         return DynamoDB(**kwargs).get(Key=kwargs.get('path'))
 
     @staticmethod
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Lambdas.Decorators.output
     @Lambdas.Decorators.payload(id='_id')
     def put_item(*args, **kwargs):
