@@ -7,7 +7,8 @@ from dofus_bubble.dynamodb.lambdas import get_item, put_item, scan_items
 
 class TestDynamoDB(unittest.TestCase):
     __DYNAMODB_TABLE__ = 'dofus-bubble'
-    __event__ = {'body': None, 'pathParameters': None, 'queryStringParameters': None}
+    __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None,
+                 'queryStringParameters': None}
     __context__ = None
     __mock__ = os.path.dirname(os.getcwd()) + '\mock\dynamodb\{mock}.json'
 
