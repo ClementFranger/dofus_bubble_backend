@@ -7,6 +7,9 @@ from dofapi.dofapi import Dofapi
 
 class LambdasDofapi(Lambdas):
 
+    def __init__(self):
+        self.__DOFAPI__ = Dofapi()
+
     class Decorators(object):
         @classmethod
         def output(cls, f):
@@ -18,35 +21,29 @@ class LambdasDofapi(Lambdas):
                 return {'statusCode': 200, 'headers': kwargs.get('headers'), 'body': json.dumps(result)}
             return wrapper
 
-    @staticmethod
     @Decorators.output
-    def scan_consumables(*args, **kwargs):
-        return Dofapi().scan_consumables()
+    def scan_consumables(self, *args, **kwargs):
+        return self.__DOFAPI__.scan_consumables()
 
-    @staticmethod
     @Decorators.output
-    def scan_equipments(*args, **kwargs):
-        return Dofapi().scan_equipments()
+    def scan_equipments(self, *args, **kwargs):
+        return self.__DOFAPI__.scan_equipments()
 
-    @staticmethod
     @Decorators.output
-    def scan_idols(*args, **kwargs):
-        return Dofapi().scan_idols()
+    def scan_idols(self, *args, **kwargs):
+        return self.__DOFAPI__.scan_idols()
 
-    @staticmethod
     @Decorators.output
-    def scan_resources(*args, **kwargs):
-        return Dofapi().scan_resources()
+    def scan_resources(self, *args, **kwargs):
+        return self.__DOFAPI__.scan_resources()
 
-    @staticmethod
     @Decorators.output
-    def scan_weapons(*args, **kwargs):
-        return Dofapi().scan_weapons()
+    def scan_weapons(self, *args, **kwargs):
+        return self.__DOFAPI__.scan_weapons()
 
-    @staticmethod
     @Decorators.output
-    def _scan_items(*args, **kwargs):
-        return Dofapi()._scan_items()
+    def _scan_items(self, *args, **kwargs):
+        return self.__DOFAPI__._scan_items()
 
 
 scan_consumables = LambdasDofapi().scan_consumables
