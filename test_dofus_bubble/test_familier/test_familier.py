@@ -19,7 +19,6 @@ class TestFamilier(unittest.TestCase):
         with open(self.__mock__.format(mock='batch_put_small'), "r", encoding="utf8") as mock:
             self.__event__['body'] = json.dumps(json.loads(mock.read()).get('body'))
         result = LambdasFamilier().batch_put(self.__event__, self.__context__)
-        print(result)
         self._test_response(result)
         self.assertIsInstance(result.get('body'), str)
 

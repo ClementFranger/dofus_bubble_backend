@@ -14,7 +14,7 @@ provider:
 
   environment:
     ACCOUNT: '166257563783'
-    AWS_UTILS: 42
+    AWS_UTILS: 43
 
   iamRoleStatements:
     - Effect: Allow
