@@ -28,7 +28,7 @@ class LambdasDofus(LambdasDofapi):
                 result = LambdasDofus._set_items_price(*result, **kwargs)
                 result = LambdasDofus._filter_items_price(result, **kwargs)
                 result = LambdasDofus.compute_items_craft(result, **kwargs)
-                return result
+                return sorted(result, key=lambda i: i.get('price') - i.get('craft'), reverse=True)
 
             return wrapper
 
