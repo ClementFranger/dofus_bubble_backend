@@ -5,7 +5,7 @@ import unittest
 from dofus_bubble.price.lambdas import LambdasPrice
 
 
-class TestDynamoDB(unittest.TestCase):
+class TestPrice(unittest.TestCase):
     __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None,
                  'queryStringParameters': None}
     __context__ = None
