@@ -22,8 +22,3 @@ class TestFamilier(unittest.TestCase):
         self._test_response(result)
         self.assertIsInstance(result.get('body'), str)
 
-    def test_scan_familiers_price(self):
-        result = LambdasFamilier().scan_familiers_price(self.__event__, self.__context__)
-        self._test_response(result)
-        self.assertIsInstance(result.get('body'), str)
-
