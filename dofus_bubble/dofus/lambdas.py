@@ -50,17 +50,18 @@ class LambdasDofus(LambdasDofapi):
 
     def _find_item(self, **kwargs):
         items, item, id = kwargs.get('items'), kwargs.get('item'), kwargs.get('id')
-        return next((i for i in items if i.get(id.get('id1')) == item.get(id.get('id2'))), dict())
+        id1, id2 = (id.get('id1'), id.get('id2')) if isinstance(id, dict) else (id, id)
+        return next((i for i in items if i.get(id1) == item.get(id2)), dict())
 
     def _set_items_price(self, items, dynamodb, **kwargs):
         id, type = kwargs.get('id', self.__DOFAPI__.__ID__), kwargs.get('type')
         if type == 'craft':
             return [{**item,
-                     **self._find_item(items=dynamodb, item=item, id={'id1': id, 'id2': id}),
+                     **self._find_item(items=dynamodb, item=item, id=id),
                      **{'recipe': [{**v, **self._find_item(items=dynamodb, item=v, id={'id1': self.__DOFAPI__.__ID__,
                                                                                        'id2': self.__DOFAPI__.__ANKAMA_ID__})}
                                    for v in list(chain(*[r.values() for r in item.get('recipe')]))]}} for item in items]
-        return [{**item, **self._find_item(items=dynamodb, item=item, id={'id1': id, 'id2': id})} for item in items]
+        return [{**item, **self._find_item(items=dynamodb, item=item, id=id)} for item in items]
 
     @staticmethod
     def _filter_items_price(items, **kwargs):
