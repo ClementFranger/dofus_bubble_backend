@@ -24,12 +24,12 @@ class LambdasDofus(LambdasDofapi):
             return wrapper
 
         @classmethod
-        def craft(cls, type='craft', remove=True):
+        def craft(cls, id='_id', type='craft', remove=True):
             def decorator(f):
                 @wraps(f)
                 def wrapper(self, *args, **kwargs):
                     result = f(self, *args, **kwargs)
-                    result = self._set_items_price(*result, type=type, **kwargs)
+                    result = self._set_items_price(*result, id=id, type=type, **kwargs)
                     result = LambdasDofus._filter_items_price(result, remove=remove, type=type, **kwargs)
                     result = LambdasDofus._compute_items_craft(result, **kwargs)
                     return sorted(result, key=lambda i: i.get('price') - i.get('craft'), reverse=True)
@@ -57,7 +57,7 @@ class LambdasDofus(LambdasDofapi):
         if type == 'craft':
             return [{**item,
                      **self._find_item(items=dynamodb, item=item, id=id),
-                     **{'recipe': [{**v, **self._find_item(items=dynamodb, id=v.get('ankamaId'))}
+                     **{'recipe': [{**v, **self._find_item(items=dynamodb, item=v, id=self.__DOFAPI__.__ANKAMA_ID__)}
                                    for v in list(chain(*[r.values() for r in item.get('recipe')]))]}} for item in items]
         return [{**item, **self._find_item(items=dynamodb, item=item, id=id)} for item in items]
 

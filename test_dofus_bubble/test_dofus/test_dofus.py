@@ -48,6 +48,5 @@ class TestDofus(unittest.TestCase):
 
     def test_scan_familiers_price(self):
         result = LambdasDofus().scan_familiers_price(self.__event__, self.__context__)
-        print(result)
         self.assertIsInstance(result.get('body'), str)
         self._test_response(result)
