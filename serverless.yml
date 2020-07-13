@@ -5,24 +5,24 @@ package:
 
 plugins:
   - serverless-python-requirements
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
   runtime: python3.7
   stage: dev
   region: eu-west-3
+  events:
+    - http:
+        cors: true
+  layers:
+    - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
 
   environment:
     ACCOUNT: '166257563783'
     AWS_UTILS: 44
-
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-       - dynamodb:GetItem
-       - dynamodb:PutItem
-       - dynamodb:Scan
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/dofus-bubble"
+    PRICE_TABLE: 'dofus-bubble'
+    FAMILIER_TABLE: 'dofus-bubble-familier'
 
 functions:
   scan_consumables:
@@ -31,141 +31,147 @@ functions:
       - http:
           path: dofus_bubble/consumables
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_equipments:
     handler: dofus_bubble/dofapi/lambdas.scan_equipments
     events:
       - http:
           path: dofus_bubble/equipments
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_idols:
     handler: dofus_bubble/dofapi/lambdas.scan_idols
     events:
       - http:
           path: dofus_bubble/idols
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_resources:
     handler: dofus_bubble/dofapi/lambdas.scan_resources
     events:
       - http:
           path: dofus_bubble/resources
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_weapons:
     handler: dofus_bubble/dofapi/lambdas.scan_weapons
     events:
       - http:
           path: dofus_bubble/weapons
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   _scan_items:
     handler: dofus_bubble/dofapi/lambdas._scan_items
     events:
       - http:
           path: dofus_bubble
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
   scan_items:
     handler: dofus_bubble/price/lambdas.scan
     events:
       - http:
           path: dofus_bubble/dynamodb
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   get_item:
     handler: dofus_bubble/price/lambdas.get
     events:
       - http:
           path: dofus_bubble/dynamodb/{_id}
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   put_item:
     handler: dofus_bubble/price/lambdas.put
     events:
       - http:
           path: dofus_bubble/dynamodb
           method: post
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_items_craft:
     handler: dofus_bubble/dofus/lambdas.scan_items_craft
     events:
       - http:
           path: dofus_bubble/dofus
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_consumables_price:
     handler: dofus_bubble/dofus/lambdas.scan_consumables_price
     events:
       - http:
           path: dofus_bubble/dofus/consumables
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_equipments_price:
     handler: dofus_bubble/dofus/lambdas.scan_equipments_price
     events:
       - http:
           path: dofus_bubble/dofus/equipments
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_idols_price:
     handler: dofus_bubble/dofus/lambdas.scan_idols_price
     events:
       - http:
           path: dofus_bubble/dofus/idols
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_resources_price:
     handler: dofus_bubble/dofus/lambdas.scan_resources_price
     events:
       - http:
           path: dofus_bubble/dofus/resources
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_weapons_price:
     handler: dofus_bubble/dofus/lambdas.scan_weapons_price
     events:
       - http:
           path: dofus_bubble/dofus/weapons
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
   scan_familiers_price:
     handler: dofus_bubble/dofus/lambdas.scan_familiers_price
     events:
       - http:
           path: dofus_bubble/dofus/familiers
           method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.FAMILIER_TABLE}"
