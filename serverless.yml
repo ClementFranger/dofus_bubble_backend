@@ -14,7 +14,7 @@ provider:
 
   environment:
     ACCOUNT: '166257563783'
-    AWS_UTILS: 43
+    AWS_UTILS: 44
 
   iamRoleStatements:
     - Effect: Allow
@@ -156,6 +156,15 @@ functions:
     events:
       - http:
           path: dofus_bubble/dofus/weapons
+          method: get
+          cors: true
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+  scan_familiers_price:
+    handler: dofus_bubble/dofus/lambdas.scan_familiers_price
+    events:
+      - http:
+          path: dofus_bubble/dofus/familiers
           method: get
           cors: true
     layers:

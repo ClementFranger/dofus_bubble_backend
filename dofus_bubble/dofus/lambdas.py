@@ -146,3 +146,4 @@ scan_equipments_price = LambdasDofus().scan_equipments_price
 scan_idols_price = LambdasDofus().scan_idols_price
 scan_resources_price = LambdasDofus().scan_resources_price
 scan_weapons_price = LambdasDofus().scan_weapons_price
+scan_familiers_price = LambdasDofus().scan_familiers_price
