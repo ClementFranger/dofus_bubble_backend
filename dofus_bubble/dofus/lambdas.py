@@ -49,8 +49,8 @@ class LambdasDofus(LambdasDofapi):
             return decorator
 
     def _find_item(self, **kwargs):
-        items, item, id1, id2 = kwargs.get('items'), kwargs.get('item'), kwargs.get('id').get('id1'), kwargs.get('id').get('id2')
-        return next((i for i in items if i.get(id2) == item.get(id1)), dict())
+        items, item, id = kwargs.get('items'), kwargs.get('item'), kwargs.get('id')
+        return next((i for i in items if i.get(id.get('id1')) == item.get(id.get('id2'))), dict())
 
     def _set_items_price(self, items, dynamodb, **kwargs):
         id, type = kwargs.get('id', self.__DOFAPI__.__ID__), kwargs.get('type')
