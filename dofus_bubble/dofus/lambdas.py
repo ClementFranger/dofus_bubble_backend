@@ -80,7 +80,7 @@ class LambdasDofus(LambdasDofapi):
 
     @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Decorators.output
-    @Lambdas.Decorators.limit()
+    @Lambdas.Decorators.limit(limit=100)
     @Decorators.craft()
     def scan_items_craft(self, *args, **kwargs):
         items = list(
