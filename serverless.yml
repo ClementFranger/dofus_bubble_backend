@@ -123,6 +123,7 @@ functions:
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+    timeout: 10
   scan_consumables_price:
     handler: dofus_bubble/dofus/lambdas.scan_consumables_price
     events:
