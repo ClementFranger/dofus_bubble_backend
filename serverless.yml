@@ -14,7 +14,7 @@ provider:
 
   environment:
     ACCOUNT: '166257563783'
-    AWS_UTILS: 46
+    AWS_UTILS: 50
     PRICE_TABLE: 'dofus-bubble'
     FAMILIER_TABLE: 'dofus-bubble-familier'
 
