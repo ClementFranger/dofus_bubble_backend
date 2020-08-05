@@ -14,7 +14,7 @@ provider:
 
   environment:
     ACCOUNT: '166257563783'
-    AWS_UTILS: 50
+    AWS_UTILS: 1
     PRICE_TABLE: 'dofus-bubble'
     FAMILIER_TABLE: 'dofus-bubble-familier'
 
@@ -41,7 +41,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_equipments:
     handler: dofus_bubble/dofapi/lambdas.scan_equipments
     events:
@@ -50,7 +50,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_idols:
     handler: dofus_bubble/dofapi/lambdas.scan_idols
     events:
@@ -59,7 +59,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_resources:
     handler: dofus_bubble/dofapi/lambdas.scan_resources
     events:
@@ -68,7 +68,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_weapons:
     handler: dofus_bubble/dofapi/lambdas.scan_weapons
     events:
@@ -77,7 +77,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   _scan_items:
     handler: dofus_bubble/dofapi/lambdas._scan_items
     events:
@@ -86,7 +86,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_items:
     handler: dofus_bubble/price/lambdas.scan
     events:
@@ -95,7 +95,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   get_item:
     handler: dofus_bubble/price/lambdas.get
     events:
@@ -104,7 +104,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   put_item:
     handler: dofus_bubble/price/lambdas.put
     events:
@@ -113,7 +113,7 @@ functions:
           method: post
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_items_craft:
     handler: dofus_bubble/dofus/lambdas.scan_items_craft
     events:
@@ -122,7 +122,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
     timeout: 10
   scan_consumables_price:
     handler: dofus_bubble/dofus/lambdas.scan_consumables_price
@@ -132,7 +132,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_equipments_price:
     handler: dofus_bubble/dofus/lambdas.scan_equipments_price
     events:
@@ -141,7 +141,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_idols_price:
     handler: dofus_bubble/dofus/lambdas.scan_idols_price
     events:
@@ -150,7 +150,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_resources_price:
     handler: dofus_bubble/dofus/lambdas.scan_resources_price
     events:
@@ -159,7 +159,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_weapons_price:
     handler: dofus_bubble/dofus/lambdas.scan_weapons_price
     events:
@@ -168,7 +168,7 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
   scan_familiers_price:
     handler: dofus_bubble/dofus/lambdas.scan_familiers_price
     events:
@@ -177,4 +177,4 @@ functions:
           method: get
           cors: true
     layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils:${self:provider.environment.AWS_UTILS}"
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
