@@ -1,17 +1,24 @@
 import json
 from functools import wraps
 from itertools import chain
+from enum import Enum
 
-from dofus_bubble.dofapi.lambdas import LambdasDofapi
+from dofapi.dofapi import Dofapi
 from dofus_bubble.familier.lambdas import LambdasFamilier
 from dofus_bubble.price.lambdas import LambdasPrice
 from lambdas.lambdas import Lambdas
 from utils import DecimalEncoder
 
 
-class LambdasDofus(LambdasDofapi):
+class LambdasDofus(Lambdas):
+    __DOFAPI__ = Dofapi()
     __PRICE__ = LambdasPrice()
     __FAMILIER__ = LambdasFamilier()
+
+    class Professions(Enum):
+        ALCHIMIE = 'Alchimie'
+        FORGERON = 'Forgeron'
+        SCULPTEUR = 'Sculpteur'
 
     class Decorators(object):
         @classmethod
@@ -140,6 +147,11 @@ class LambdasDofus(LambdasDofapi):
         familiers = json.loads(self.__FAMILIER__.scan(*args, **kwargs).get('body')).get('Items')
         prices = json.loads(self.__PRICE__.scan(*args, **kwargs).get('body')).get('Items')
         return familiers, prices
+
+    @Lambdas.Decorators.payload(id='profession')
+    def scan_profession_craft(self, **kwargs):
+        print(kwargs)
+        return
 
 
 scan_items_craft = LambdasDofus().scan_items_craft
