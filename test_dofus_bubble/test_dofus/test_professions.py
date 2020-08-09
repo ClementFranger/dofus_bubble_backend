@@ -1,12 +1,12 @@
 import unittest
 
 from dofapi.dofapi import Dofapi
-from dofus_bubble.dofus.professions import Profession
+from dofus_bubble.dofus.professions import Professions
 
 
 class TestProfessions(unittest.TestCase):
-    _PROFESSIONS = Profession()
+    _PROFESSIONS = Professions()
     _DOFAPI = Dofapi()
 
     def test_professions(self):
-        self.assertEqual(len(self._PROFESSIONS._keys()), len(self._DOFAPI._scan_professions()))
+        self.assertEqual(len(self._PROFESSIONS._keys()), len(self._DOFAPI._scan_professions(unique=True)))

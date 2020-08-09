@@ -1,4 +1,5 @@
 import json
+import os
 import unittest
 
 from dofus_bubble.dofus.lambdas import LambdasDofus
@@ -8,6 +9,7 @@ class TestDofus(unittest.TestCase):
     __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None,
                  'queryStringParameters': None}
     __context__ = None
+    __mock__ = os.path.dirname(os.getcwd()) + '\mock\dofus\{mock}.json'
 
     def _test_response(self, result):
         body = json.loads(result.get('body'))
@@ -48,5 +50,12 @@ class TestDofus(unittest.TestCase):
 
     def test_scan_familiers_price(self):
         result = LambdasDofus().scan_familiers_price(self.__event__, self.__context__)
+        self.assertIsInstance(result.get('body'), str)
+        self._test_response(result)
+
+    def test_scan_profession_craft(self):
+        with open(self.__mock__.format(mock='scan_profession_craft'), "r") as mock:
+            self.__event__['pathParameters'] = json.loads(mock.read()).get('pathParameters')
+        result = LambdasDofus()._scan_profession_craft(self.__event__, self.__context__)
         self.assertIsInstance(result.get('body'), str)
         self._test_response(result)
