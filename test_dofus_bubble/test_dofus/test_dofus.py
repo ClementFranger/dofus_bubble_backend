@@ -1,8 +1,11 @@
 import json
+import logging
 import os
 import unittest
 
 from dofus_bubble.dofus.lambdas import LambdasDofus
+
+logging.basicConfig(level=logging.INFO)
 
 
 class TestDofus(unittest.TestCase):
@@ -57,5 +60,15 @@ class TestDofus(unittest.TestCase):
         with open(self.__mock__.format(mock='scan_profession_craft'), "r") as mock:
             self.__event__['pathParameters'] = json.loads(mock.read()).get('pathParameters')
         result = LambdasDofus()._scan_profession_craft(self.__event__, self.__context__)
+
+
+        # seen = []
+        # for b in result:
+        #     if b.get('_id') in seen:
+        #         print(b.get('name'))
+        #     else:
+        #         seen.append(b.get('_id'))
+        # print(len(result) - len(seen))
+
         self.assertIsInstance(result.get('body'), str)
         self._test_response(result)

@@ -1,7 +1,10 @@
+import logging
 import json
 import unittest
 
 from dofus_bubble.dofapi.lambdas import LambdasDofapi
+
+logging.basicConfig(level=logging.INFO)
 
 
 class TestDofapi(unittest.TestCase):

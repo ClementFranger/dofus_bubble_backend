@@ -159,11 +159,9 @@ class LambdasDofus(Lambdas):
 
     @Lambdas.Decorators.payload(id='profession')
     def _scan_profession_craft(self, *args, **kwargs):
-        print(kwargs)
-        result = self._DOFAPI._scan(endpoints=self._PROFESSIONS.get(kwargs.get('path').get('profession')).endpoints(),
-                                    unique=True)
+        result = self._DOFAPI._scan_items()
         print(len(result))
-        return
+        return result
 
 
 scan_items_craft = LambdasDofus().scan_items_craft

@@ -1,4 +1,5 @@
 from dofapi.dofapi import Dofapi
+from utils import Schema
 
 
 class Profession(object):
@@ -12,10 +13,7 @@ class Profession(object):
         return list(set(self._CRAFT))
 
 
-class Professions(object):
-
-    def _keys(self):
-        return [p for p in dir(self) if not p.startswith('_')]
+class Professions(Schema):
 
     def get(self, profession):
         return getattr(self, profession)()
