@@ -15,7 +15,7 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     AWS_UTILS: 1
-    PRICE_TABLE: 'dofus-bubble'
+    PRICES_TABLE: '${self:service.}'
     FAMILIER_TABLE: 'dofus-bubble-familier'
 
   iamRoleStatements:
