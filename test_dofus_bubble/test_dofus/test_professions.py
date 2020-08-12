@@ -9,4 +9,5 @@ class TestProfessions(unittest.TestCase):
     _DOFAPI = Dofapi()
 
     def test_professions(self):
-        self.assertEqual(len(self._PROFESSIONS._keys()), len(self._DOFAPI._scan_professions(unique=True)))
+        self.assertEqual(len(self._PROFESSIONS.keys()), len(self._DOFAPI.scan(endpoints=self._DOFAPI.Schema.PROFESSIONS,
+                                                                              unique=True)))

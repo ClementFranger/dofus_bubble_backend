@@ -1,3 +1,4 @@
+import inspect
 from dofapi.dofapi import Dofapi
 from utils import Schema
 
@@ -17,6 +18,10 @@ class Professions(Schema):
 
     def get(self, profession):
         return getattr(self, profession)()
+
+    @classmethod
+    def keys(cls):
+        return [k for k, v in vars(cls).items() if not k.startswith('__') and inspect.isclass(v)]
 
     class Bucheron(Profession):
         ENDPOINTS = [Dofapi.APISchema.RESOURCES]

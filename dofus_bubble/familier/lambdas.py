@@ -2,11 +2,12 @@ import json
 from decimal import Decimal
 from functools import wraps
 
-from dynamodb.lambdas import LambdasDynamoDB
+from dofus_bubble.familier.dynamodb import Familiers
+from lambdas.lambdas import Lambdas
 
 
-class LambdasFamilier(LambdasDynamoDB):
-    __DYNAMODB_TABLE__ = 'dofus-bubble-familier'
+class LambdasFamiliers(Lambdas):
+    _FAMILIERS = Familiers()
 
     class Decorators(object):
         @classmethod
@@ -23,4 +24,4 @@ class LambdasFamilier(LambdasDynamoDB):
         return super().batch_put(event, *args, **kwargs)
 
 
-batch_put = LambdasFamilier().batch_put
+batch_put = LambdasFamiliers().batch_put
