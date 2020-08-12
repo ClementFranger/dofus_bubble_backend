@@ -82,7 +82,7 @@ functions:
     handler: dofus_bubble/dofus/lambdas.scan_profession_craft
     events:
       - http:
-          path: dofus_bubble/dofus/{profession}
+          path: dofus_bubble/dofus/professions/{profession}
           method: get
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
