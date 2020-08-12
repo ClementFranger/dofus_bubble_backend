@@ -97,6 +97,6 @@ class LambdasDofus(Lambdas):
         return result, prices, self._DOFAPI.Schema.ID
 
 
-scan_profession_craft = LambdasDofus().scan_profession_craft
 scan_items_price = LambdasDofus().scan_items_price
 scan_familiers_price = LambdasDofus().scan_familiers_price
+scan_profession_craft = LambdasDofus().scan_profession_craft
