@@ -15,8 +15,8 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     AWS_UTILS: 2
-    PRICES_TABLE: '${self:service.}-prices'
-    FAMILIER_TABLE: '${self:service.}-familier'
+    PRICES_TABLE: '${self:service}-prices'
+    FAMILIER_TABLE: '${self:service}-familier'
 
   iamRoleStatements:
     - Effect: Allow
@@ -24,7 +24,7 @@ provider:
        - dynamodb:GetItem
        - dynamodb:PutItem
        - dynamodb:Scan
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICES_TABLE}"
     - Effect: Allow
       Action:
        - dynamodb:GetItem
