@@ -27,10 +27,10 @@ class TestLambdas(unittest.TestCase):
         self.assertIsInstance(result.get('body'), str)
         self._test_response(result)
 
-    def test_scan_profession_craft(self):
+    def test_scan_profession_price(self):
         with open(self.__mock__.format(mock='scan_profession_craft'), "r") as mock:
             self.__event__['pathParameters'] = json.loads(mock.read()).get('pathParameters')
-        result = self._LAMBDAS_DOFUS.scan_profession_craft(self.__event__, self.__context__)
+        result = self._LAMBDAS_DOFUS.scan_profession_price(self.__event__, self.__context__)
         self.assertIsInstance(result.get('body'), str)
         self._test_response(result)
 

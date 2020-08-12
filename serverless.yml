@@ -33,23 +33,23 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.FAMILIER_TABLE}"
 
 functions:
-  scan_prices:
-    handler: dofus_bubble/price/lambdas.scan
-    events:
-      - http:
-          path: dofus_bubble/prices
-          method: get
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-
-  get_prices:
-    handler: dofus_bubble/price/lambdas.get
-    events:
-      - http:
-          path: dofus_bubble/prices/{_id}
-          method: get
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+#  scan_prices:
+#    handler: dofus_bubble/price/lambdas.scan
+#    events:
+#      - http:
+#          path: dofus_bubble/prices
+#          method: get
+#    layers:
+#      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+#
+#  get_prices:
+#    handler: dofus_bubble/price/lambdas.get
+#    events:
+#      - http:
+#          path: dofus_bubble/prices/{_id}
+#          method: get
+#    layers:
+#      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
 
   put_prices:
     handler: dofus_bubble/price/lambdas.put
@@ -64,7 +64,7 @@ functions:
     handler: dofus_bubble/dofus/lambdas.scan_items_price
     events:
       - http:
-          path: dofus_bubble/dofus/{endpoint}
+          path: dofus_bubble/dofus/{items}
           method: get
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
@@ -78,8 +78,8 @@ functions:
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
 
-  scan_profession_craft:
-    handler: dofus_bubble/dofus/lambdas.scan_profession_craft
+  scan_profession_price:
+    handler: dofus_bubble/dofus/lambdas.scan_profession_price
     events:
       - http:
           path: dofus_bubble/dofus/professions/{profession}

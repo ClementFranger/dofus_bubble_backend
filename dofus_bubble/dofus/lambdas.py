@@ -1,6 +1,6 @@
 import logging
 import json
-from functools import wraps
+from functools import wraps, reduce
 
 from dofapi.dofapi import Dofapi
 from dofus_bubble.dofus.professions import Professions
@@ -31,7 +31,7 @@ class LambdasDofus(Lambdas):
             return wrapper
 
         @classmethod
-        def price(cls, remove=False, recipe=False):
+        def price(cls, remove=False, recipe=False, profit=False):
             def decorator(f):
                 @wraps(f)
                 def wrapper(self, *args, **kwargs):
@@ -39,6 +39,8 @@ class LambdasDofus(Lambdas):
                     result = self._set_items_price(*result, recipe=recipe, **kwargs)
                     if remove:
                         result = self._filter_items_price(result, **kwargs)
+                    if profit:
+                        result = self._set_items_profit(result, **kwargs)
                     return result
 
                 return wrapper
@@ -68,6 +70,14 @@ class LambdasDofus(Lambdas):
         logger.info('Filtered {count} non empty price items'.format(count=len(items)))
         return items
 
+    def _set_items_profit(self, items, **kwargs):
+        for i in items:
+            if all([r.get(self._PRICES.Schema.PRICE) for r in i.get(self._DOFAPI.Schema.RECIPE)]):
+                i['profit'] = reduce(lambda a, b: a.get(self._PRICES.Schema.PRICE) * a.get(self._DOFAPI.Schema.QUANTITY)
+                                                  + b.get(self._PRICES.Schema.PRICE) * b.get(self._DOFAPI.Schema.QUANTITY),
+                                     items) - i.get(self._PRICES.Schema.PRICE)
+        return items
+
     @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Lambdas.Decorators.payload(id='items')
     @Decorators.output
@@ -89,16 +99,18 @@ class LambdasDofus(Lambdas):
     @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Lambdas.Decorators.payload(id='profession')
     @Decorators.output
-    @Decorators.price(recipe=True)
-    def scan_profession_craft(self, *args, **kwargs):
+    @Decorators.price(recipe=True, profit=True)
+    def scan_profession_price(self, *args, **kwargs):
         profession = kwargs.get('path').get('profession')
         result = [r for r in self._DOFAPI.scan(endpoints=self._PROFESSIONS.get(profession).ENDPOINTS, *args, **kwargs)
-                  if r.get(self._DOFAPI.Schema.RECIPE) and r.get(self._DOFAPI.Schema.TYPE) in self._PROFESSIONS.get(profession).CRAFT]
+                  if r.get(self._DOFAPI.Schema.RECIPE) and r.get(self._DOFAPI.Schema.TYPE) in self._PROFESSIONS.get(
+                profession).CRAFT]
         prices = self._PRICES.scan(**kwargs).get('Items')
-        logger.info('Filtered {count} craft for {profession} profession'.format(count=len(result), profession=profession))
+        logger.info(
+            'Filtered {count} craft for {profession} profession'.format(count=len(result), profession=profession))
         return result, prices, self._DOFAPI.Schema.ID
 
 
 scan_items_price = LambdasDofus().scan_items_price
 scan_familiers_price = LambdasDofus().scan_familiers_price
-scan_profession_craft = LambdasDofus().scan_profession_craft
+scan_profession_price = LambdasDofus().scan_profession_price

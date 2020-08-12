@@ -21,6 +21,6 @@ class LambdasPrices(Lambdas):
         return self._PRICES.put(Item=kwargs.get('body'))
 
 
-scan = LambdasPrices().scan
-get = LambdasPrices().get
+# scan = LambdasPrices().scan
+# get = LambdasPrices().get
 put = LambdasPrices().put
