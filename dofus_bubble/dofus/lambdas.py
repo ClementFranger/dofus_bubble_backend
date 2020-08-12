@@ -72,7 +72,7 @@ class LambdasDofus(Lambdas):
 
     def _set_items_profit(self, items, **kwargs):
         for i in items:
-            if all([r.get(self._PRICES.Schema.PRICE) for r in i.get(self._DOFAPI.Schema.RECIPE)]):
+            if i.get(self._PRICES.Schema.PRICE) and all([r.get(self._PRICES.Schema.PRICE) for r in i.get(self._DOFAPI.Schema.RECIPE)]):
                 i['profit'] = reduce(lambda a, b: a.get(self._PRICES.Schema.PRICE) * a.get(self._DOFAPI.Schema.QUANTITY)
                                                   + b.get(self._PRICES.Schema.PRICE) * b.get(self._DOFAPI.Schema.QUANTITY),
                                      items) - i.get(self._PRICES.Schema.PRICE)
