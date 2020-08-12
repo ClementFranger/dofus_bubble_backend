@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-class PriceDynamoDB(DynamoDB):
+class Prices(DynamoDB):
     _TABLE_NAME = 'dofus-bubble'
 
     class Schema(Schema):

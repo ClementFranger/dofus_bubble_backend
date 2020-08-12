@@ -41,8 +41,9 @@ class Professions(Schema):
         CRAFT = [Dofapi.EquipmentsSchema.ANNEAU, Dofapi.EquipmentsSchema.AMULETTE]
 
     class Mineur(Profession):
-        ENDPOINTS = [Dofapi.APISchema.RESOURCES]
-        CRAFT = [Dofapi.ResourcesSchema.ALLIAGE, Dofapi.ResourcesSchema.PIERRE_PRECIEUSE]
+        ENDPOINTS = [Dofapi.APISchema.RESOURCES, Dofapi.APISchema.WEAPONS]
+        CRAFT = [Dofapi.ResourcesSchema.ALLIAGE, Dofapi.ResourcesSchema.PIERRE_PRECIEUSE,
+                 Dofapi.ResourcesSchema.ORBRE_FORGEMAGIE, Dofapi.WeaponsSchema.PIERRE_AME]
 
     class Alchimiste(Profession):
         ENDPOINTS = [Dofapi.APISchema.RESOURCES, Dofapi.APISchema.CONSUMABLES]
