@@ -14,7 +14,7 @@ class LambdasPrices(Lambdas):
     def get(self, *args, **kwargs):
         return self._PRICES.get(Key=kwargs.get('path'))
 
-    # @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Lambdas.Decorators.output
     @Lambdas.Decorators.payload(id=Prices.Schema.ID)
     def put(self, *args, **kwargs):

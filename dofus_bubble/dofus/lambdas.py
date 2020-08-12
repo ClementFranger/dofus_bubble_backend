@@ -68,6 +68,7 @@ class LambdasDofus(Lambdas):
         logger.info('Filtered {count} non empty price items'.format(count=len(items)))
         return items
 
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Lambdas.Decorators.payload(id='items')
     @Decorators.output
     @Decorators.price()
@@ -77,7 +78,7 @@ class LambdasDofus(Lambdas):
         prices = self._PRICES.scan(**kwargs).get('Items')
         return result, prices, self._DOFAPI.Schema.ID
 
-    # @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Decorators.output
     @Decorators.price(remove=True)
     def scan_familiers_price(self, *args, **kwargs):
@@ -85,6 +86,7 @@ class LambdasDofus(Lambdas):
         prices = self._PRICES.scan(**kwargs).get('Items')
         return familiers, prices, self._FAMILIERS.Schema.NAME
 
+    @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
     @Lambdas.Decorators.payload(id='profession')
     @Decorators.output
     @Decorators.price(recipe=True)
