@@ -72,10 +72,12 @@ class LambdasDofus(Lambdas):
 
     def _set_items_profit(self, items, **kwargs):
         for i in items:
-            if i.get(self._PRICES.Schema.PRICE) and all([r.get(self._PRICES.Schema.PRICE) for r in i.get(self._DOFAPI.Schema.RECIPE)]):
-                i['profit'] = reduce(lambda a, b: a.get(self._PRICES.Schema.PRICE) * a.get(self._DOFAPI.Schema.QUANTITY)
-                                                  + b.get(self._PRICES.Schema.PRICE) * b.get(self._DOFAPI.Schema.QUANTITY),
-                                     items) - i.get(self._PRICES.Schema.PRICE)
+            if i.get(self._PRICES.Schema.PRICE) and all(
+                    [r.get(self._PRICES.Schema.PRICE) for r in i.get(self._DOFAPI.Schema.RECIPE)]):
+                i['profit'] = i.get(self._PRICES.Schema.PRICE)\
+                              - reduce(lambda a, b: a.get(self._PRICES.Schema.PRICE) * a.get(self._DOFAPI.Schema.QUANTITY)
+                                                    + b.get(self._PRICES.Schema.PRICE) * b.get(self._DOFAPI.Schema.QUANTITY),
+                    i.get(self._DOFAPI.Schema.RECIPE))
         return items
 
     @Lambdas.Decorators.cors(ips=[r"^https://master\..+\.amplifyapp\.com$", r"^http://localhost:3000$"])
