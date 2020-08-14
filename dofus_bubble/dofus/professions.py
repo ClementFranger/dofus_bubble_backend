@@ -1,6 +1,8 @@
 import inspect
 from dofapi.dofapi import Dofapi
 from utils import Schema
+from urllib.parse import unquote
+
 
 
 class Profession(object):
@@ -17,13 +19,14 @@ class Profession(object):
 class Professions(Schema):
 
     def get(self, profession):
+        profession = unquote(profession)
         return getattr(self, profession)()
 
     @classmethod
     def keys(cls):
         return [k for k, v in vars(cls).items() if not k.startswith('__') and inspect.isclass(v)]
 
-    class Bucheron(Profession):
+    class Bûcheron(Profession):
         ENDPOINTS = [Dofapi.APISchema.RESOURCES]
         CRAFT = [Dofapi.ResourcesSchema.PLANCHE, Dofapi.ResourcesSchema.SUBSTRAT]
 
@@ -64,7 +67,7 @@ class Professions(Schema):
         ENDPOINTS = []
         CRAFT = []
 
-    class Pecheur(Profession):
+    class Pêcheur(Profession):
         ENDPOINTS = []
         CRAFT = []
 
@@ -78,7 +81,7 @@ class Professions(Schema):
     class Sculptemage(Profession):
         pass
 
-    class Faconneur(Profession):
+    class Façonneur(Profession):
         ENDPOINTS = [Dofapi.APISchema.RESOURCES, Dofapi.APISchema.EQUIPMENTS]
         CRAFT = [Dofapi.ResourcesSchema.IDOLE, Dofapi.EquipmentsSchema.TROPHEE, Dofapi.EquipmentsSchema.BOUCLIER]
 
@@ -95,5 +98,5 @@ class Professions(Schema):
         ENDPOINTS = [Dofapi.APISchema.RESOURCES, Dofapi.APISchema.CONSUMABLES]
         CRAFT = [Dofapi.ResourcesSchema.CLEF, Dofapi.ConsumablesSchema.OBJET_ELEVAGE]
 
-    class Facomage(Profession):
+    class Façomage(Profession):
         pass
