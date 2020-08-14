@@ -57,6 +57,7 @@ functions:
       - http:
           path: dofus_bubble/prices
           method: post
+          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
 
