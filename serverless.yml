@@ -15,8 +15,8 @@ provider:
   environment:
     ACCOUNT: '166257563783'
     AWS_UTILS: 1
-    PRICE_TABLE: 'dofus-bubble'
-    FAMILIER_TABLE: 'dofus-bubble-familier'
+    PRICES_TABLE: '${self:service}-prices'
+    FAMILIER_TABLE: '${self:service}-familier'
 
   iamRoleStatements:
     - Effect: Allow
@@ -24,7 +24,7 @@ provider:
        - dynamodb:GetItem
        - dynamodb:PutItem
        - dynamodb:Scan
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICE_TABLE}"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PRICES_TABLE}"
     - Effect: Allow
       Action:
        - dynamodb:GetItem
@@ -33,148 +33,78 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.FAMILIER_TABLE}"
 
 functions:
-  scan_consumables:
-    handler: dofus_bubble/dofapi/lambdas.scan_consumables
-    events:
-      - http:
-          path: dofus_bubble/consumables
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_equipments:
-    handler: dofus_bubble/dofapi/lambdas.scan_equipments
-    events:
-      - http:
-          path: dofus_bubble/equipments
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_idols:
-    handler: dofus_bubble/dofapi/lambdas.scan_idols
-    events:
-      - http:
-          path: dofus_bubble/idols
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_resources:
-    handler: dofus_bubble/dofapi/lambdas.scan_resources
-    events:
-      - http:
-          path: dofus_bubble/resources
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_weapons:
-    handler: dofus_bubble/dofapi/lambdas.scan_weapons
-    events:
-      - http:
-          path: dofus_bubble/weapons
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  _scan_items:
-    handler: dofus_bubble/dofapi/lambdas._scan_items
-    events:
-      - http:
-          path: dofus_bubble
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_items:
-    handler: dofus_bubble/price/lambdas.scan
-    events:
-      - http:
-          path: dofus_bubble/dynamodb
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  get_item:
-    handler: dofus_bubble/price/lambdas.get
-    events:
-      - http:
-          path: dofus_bubble/dynamodb/{_id}
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  put_item:
+#  scan_prices:
+#    handler: dofus_bubble/price/lambdas.scan
+#    events:
+#      - http:
+#          path: dofus_bubble/prices
+#          method: get
+#    layers:
+#      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+#
+#  get_prices:
+#    handler: dofus_bubble/price/lambdas.get
+#    events:
+#      - http:
+#          path: dofus_bubble/prices/{_id}
+#          method: get
+#    layers:
+#      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+
+  put_prices:
     handler: dofus_bubble/price/lambdas.put
     events:
       - http:
-          path: dofus_bubble/dynamodb
+          path: dofus_bubble/prices
           method: post
           cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_items_craft:
-    handler: dofus_bubble/dofus/lambdas.scan_items_craft
+
+  scan_items_price:
+    handler: dofus_bubble/dofus/lambdas.scan_items_price
     events:
       - http:
-          path: dofus_bubble/dofus
+          path: dofus_bubble/dofus/{items}
           method: get
-          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-    timeout: 10
-  scan_consumables_price:
-    handler: dofus_bubble/dofus/lambdas.scan_consumables_price
-    events:
-      - http:
-          path: dofus_bubble/dofus/consumables
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_equipments_price:
-    handler: dofus_bubble/dofus/lambdas.scan_equipments_price
-    events:
-      - http:
-          path: dofus_bubble/dofus/equipments
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_idols_price:
-    handler: dofus_bubble/dofus/lambdas.scan_idols_price
-    events:
-      - http:
-          path: dofus_bubble/dofus/idols
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_resources_price:
-    handler: dofus_bubble/dofus/lambdas.scan_resources_price
-    events:
-      - http:
-          path: dofus_bubble/dofus/resources
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
-  scan_weapons_price:
-    handler: dofus_bubble/dofus/lambdas.scan_weapons_price
-    events:
-      - http:
-          path: dofus_bubble/dofus/weapons
-          method: get
-          cors: true
-    layers:
-      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+
   scan_familiers_price:
     handler: dofus_bubble/dofus/lambdas.scan_familiers_price
     events:
       - http:
           path: dofus_bubble/dofus/familiers
           method: get
-          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+
+  scan_profession_price:
+    handler: dofus_bubble/dofus/lambdas.scan_profession_price
+    events:
+      - http:
+          path: dofus_bubble/dofus/professions/{profession}
+          method: get
+    layers:
+      - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+           gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+           gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseDefault5XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+           gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+           gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'

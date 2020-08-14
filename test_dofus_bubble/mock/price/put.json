@@ -1,6 +1,7 @@
 {
   "body": {
     "_id": 1,
-    "price": 0
+    "price": 0,
+    "name": "test"
   }
 }

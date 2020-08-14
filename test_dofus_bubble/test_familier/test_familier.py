@@ -2,10 +2,11 @@ import json
 import os
 import unittest
 
-from dofus_bubble.familier.lambdas import LambdasFamilier
+from dofus_bubble.familier.lambdas import LambdasFamiliers
 
 
 class TestFamilier(unittest.TestCase):
+    _LAMBDAS_FAMILIERS = LambdasFamiliers()
     __event__ = {'headers': {'origin': 'http://localhost:3000'}, 'body': None, 'pathParameters': None,
                  'queryStringParameters': None}
     __context__ = None
@@ -18,7 +19,7 @@ class TestFamilier(unittest.TestCase):
     def test_batch_put(self):
         with open(self.__mock__.format(mock='batch_put_small'), "r", encoding="utf8") as mock:
             self.__event__['body'] = json.dumps(json.loads(mock.read()).get('body'))
-        result = LambdasFamilier().batch_put(self.__event__, self.__context__)
+        result = self._LAMBDAS_FAMILIERS.batch_put(self.__event__, self.__context__)
         self._test_response(result)
         self.assertIsInstance(result.get('body'), str)
 
