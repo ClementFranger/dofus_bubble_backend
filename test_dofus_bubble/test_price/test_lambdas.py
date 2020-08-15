@@ -30,7 +30,7 @@ class TestPrice(unittest.TestCase):
         self._test_response(result)
         self.assertIsInstance(result.get('body'), str)
 
-    def test_scan_items(self):
+    def test_scan(self):
         result = self._LAMBDAS_PRICES.scan(self.__event__, self.__context__)
         self._test_response(result)
         self.assertIsInstance(result.get('body'), str)

@@ -27,7 +27,6 @@ class LambdasDofus(Lambdas):
                 result = f(*args, **kwargs)
                 return {'statusCode': 200, 'headers': kwargs.get('headers'),
                         'body': json.dumps(result, cls=DecimalEncoder)}
-
             return wrapper
 
         @classmethod
