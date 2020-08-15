@@ -49,6 +49,7 @@ functions:
       - http:
           path: dofus_bubble/dofus/{items}
           method: get
+          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
 
@@ -58,6 +59,7 @@ functions:
       - http:
           path: dofus_bubble/dofus/familiers
           method: get
+          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
 
@@ -67,6 +69,7 @@ functions:
       - http:
           path: dofus_bubble/dofus/professions/{profession}
           method: get
+          cors: true
     layers:
       - "arn:aws:lambda:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:layer:aws-utils-${self:provider.stage}:${self:provider.environment.AWS_UTILS}"
 
