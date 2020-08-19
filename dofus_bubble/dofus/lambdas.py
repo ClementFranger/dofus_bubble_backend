@@ -108,7 +108,7 @@ class LambdasDofus(Lambdas):
         prices = self._PRICES.scan(**kwargs).get('Items')
         logger.info(
             'Filtered {count} craft for {profession} profession'.format(count=len(result), profession=profession))
-        return result, prices, self._DOFAPI.Schema.ID
+        return result, prices, self._DOFAPI.Schema.NAME
 
 
 scan_items_price = LambdasDofus().scan_items_price
