@@ -36,9 +36,6 @@ class LambdasDofus(Lambdas):
                 def wrapper(self, *args, **kwargs):
                     result = f(self, *args, **kwargs)
                     result = self._set_items_price(*result, recipe=recipe, **kwargs)
-                    for r in result:
-                        if r.get('name') == 'Yoche magistrale':
-                            print(r)
                     if remove:
                         result = self._filter_items_price(result, **kwargs)
                     if profit:
