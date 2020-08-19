@@ -9,12 +9,12 @@ plugins:
 provider:
   name: aws
   runtime: python3.7
-  stage: dev
+  stage: master
   region: eu-west-3
 
   environment:
     ACCOUNT: '166257563783'
-    AWS_UTILS: 3
+    AWS_UTILS: 2
     PRICES_TABLE: '${self:service}-prices'
     FAMILIER_TABLE: '${self:service}-familier'
 
