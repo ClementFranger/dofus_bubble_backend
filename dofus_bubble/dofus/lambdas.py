@@ -36,6 +36,9 @@ class LambdasDofus(Lambdas):
                 def wrapper(self, *args, **kwargs):
                     result = f(self, *args, **kwargs)
                     result = self._set_items_price(*result, recipe=recipe, **kwargs)
+                    for r in result:
+                        if r.get('name') == 'Yoche magistrale':
+                            print(r)
                     if remove:
                         result = self._filter_items_price(result, **kwargs)
                     if profit:
@@ -48,12 +51,12 @@ class LambdasDofus(Lambdas):
 
     def _set_items_price(self, items, prices, id, **kwargs):
         recipe = kwargs.get('recipe', False)
-        d_prices = {d[id]: d for d in prices}
+        d_prices, d_prices_recipe = {d[id]: d for d in prices}, {d[self._DOFAPI.IDSchema.ID]: d for d in prices}
         if recipe:
             for i in items:
                 for r in i.get(self._DOFAPI.Schema.RECIPE, []):
                     """ set price to the recipe items """
-                    r[self._PRICES.Schema.PRICE] = d_prices.get(r[self._DOFAPI.IDSchema.ANKAMA_ID], {}).get(
+                    r[self._PRICES.Schema.PRICE] = d_prices_recipe.get(r[self._DOFAPI.IDSchema.ANKAMA_ID], {}).get(
                         self._PRICES.Schema.PRICE, None)
                 """ set price to the item itself """
                 i[self._PRICES.Schema.PRICE] = d_prices.get(i[id], {}).get(self._PRICES.Schema.PRICE, None)
